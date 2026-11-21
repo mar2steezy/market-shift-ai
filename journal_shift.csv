@@ -1,0 +1,3 @@
+time,event,leg,symbol,qty,price,pnl,note,rule
+2026-11-18T15:28:41,ENTER,bull,SPY,34,730.4182,0.0,"long, stop 10% away","mom_rally(n=126,th=90)"
+2026-11-19T13:30:30,EXIT,bull,SPY,34,721.7347,-295.24,market turned UNCLEAR,"mom_rally(n=126,th=90)"

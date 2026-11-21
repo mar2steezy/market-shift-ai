@@ -1,0 +1,73 @@
+{
+  "picked": "QQQ",
+  "cost_bps": 10.0,
+  "bull_stop": 0.1,
+  "bear_stop": 0.05,
+  "cooldown": 5,
+  "generated": "2026-11-14T12:27:39",
+  "by_symbol": {
+    "QQQ": {
+      "symbol": "QQQ",
+      "inverse": "PSQ",
+      "rule": "cross3",
+      "params": {},
+      "id": "cross3()",
+      "verdict": "GO",
+      "size_mult": 1.0,
+      "tuning": {
+        "return %": 46.3,
+        "max drawdown %": -20.6,
+        "trades": 6,
+        "win rate %": 33
+      },
+      "holdout": {
+        "return %": 26.4,
+        "max drawdown %": -20.4,
+        "trades": 5,
+        "win rate %": 40
+      },
+      "buyhold_tuning": {
+        "return %": 25.5,
+        "max drawdown %": -35.0
+      },
+      "buyhold_holdout": {
+        "return %": 69.6,
+        "max drawdown %": -22.7
+      },
+      "data_end": "2026-11-10"
+    },
+    "SPY": {
+      "symbol": "SPY",
+      "inverse": "SH",
+      "rule": "mom_rally",
+      "params": {
+        "n": 126,
+        "th": 90
+      },
+      "id": "mom_rally(n=126,th=90)",
+      "verdict": "GO",
+      "size_mult": 1.0,
+      "tuning": {
+        "return %": 26.0,
+        "max drawdown %": -15.0,
+        "trades": 25,
+        "win rate %": 52
+      },
+      "holdout": {
+        "return %": 33.6,
+        "max drawdown %": -14.1,
+        "trades": 9,
+        "win rate %": 44
+      },
+      "buyhold_tuning": {
+        "return %": 18.0,
+        "max drawdown %": -24.5
+      },
+      "buyhold_holdout": {
+        "return %": 63.7,
+        "max drawdown %": -18.7
+      },
+      "data_end": "2026-11-10"
+    }
+  }
+}

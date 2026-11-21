@@ -1,0 +1,15 @@
+{
+  "halted": false,
+  "in_trade": false,
+  "realized_pnl": -295.24002000000064,
+  "loss_streak": 1,
+  "leg": "bull",
+  "signal_symbol": "SPY",
+  "symbol": "SPY",
+  "side": "long",
+  "qty": 34,
+  "entry_price": 730.418236,
+  "stop_order_id": null,
+  "opened": "2026-11-18T15:28:35",
+  "last_run_date": "2026-11-19"
+}
