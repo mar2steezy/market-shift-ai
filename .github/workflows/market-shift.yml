@@ -1,0 +1,54 @@
+name: Market Shift AI
+
+# Runs once a weekday during market hours (times are UTC):
+#   18:31 UTC = 1:31 PM New York in winter, 2:31 PM in summer
+#   19:31 UTC = backup run in case GitHub skips the first one. The bot only trades once a day,
+#   so the backup just says "Already ran today".
+on:
+  schedule:
+    - cron: "31 18 * * 1-5"
+    - cron: "31 19 * * 1-5"
+  workflow_dispatch:        # lets you press "Run workflow" by hand
+
+concurrency:
+  group: market-shift
+  cancel-in-progress: false
+
+permissions:
+  contents: write           # so it can save its state and journal back here
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install
+        run: pip install -r requirements.txt
+
+      - name: Run Market Shift AI once (PAPER)
+        env:
+          APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          set +e
+          python shift_bot.py --symbol SPY 2>&1 | tee run_output.txt
+          code=${PIPESTATUS[0]}
+          # "already ran" and "market closed" are normal, not failures
+          if grep -qE "Already ran today|Market is closed" run_output.txt; then exit 0; fi
+          exit $code
+
+      - name: Save state and journal
+        if: always()
+        run: |
+          git config user.name "market-shift-bot"
+          git config user.email "market-shift-bot@users.noreply.github.com"
+          for f in state_shift.json journal_shift.csv equity_shift.csv; do [ -f "$f" ] && git add "$f"; done
+          git diff --cached --quiet || (git commit -m "Market Shift AI daily update" && git pull --rebase && git push)
